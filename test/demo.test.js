@@ -4,12 +4,12 @@ const Web3 = require('web3')
 const web3 = new Web3(ganache.provider())
 const { interface, bytecode } = require('../compile')
 
-let accounts
+let accountsX
 let demo
 
 beforeEach(async () => {
   // Get a list of all accounts
-  accounts = await web3.eth.getAccounts()
+  accountsX = await web3.eth.getAccounts()
 
   // Use one of those accounts to deploy the contract
   demo = await new web3.eth.Contract(JSON.parse(interface))
@@ -17,7 +17,7 @@ beforeEach(async () => {
       data: bytecode,
       arguments: ['Hello, World!']
     })
-    .send({ from: accounts[0], gas: '1000000' })
+    .send({ from: accountsX[0], gas: '1000000' })
 })
 
 describe('Demo', () => {
@@ -31,7 +31,7 @@ describe('Demo', () => {
   })
 
   it('can change the message', async () => {
-    await demo.methods.setMessage('bye').send({ from: accounts[0] })
+    await demo.methods.setMessage('bye').send({ from: accountsX[0] })
     const message = await demo.methods.message().call()
     assert.equal(message, 'bye')
   })
