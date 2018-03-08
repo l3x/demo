@@ -1,0 +1,4 @@
+_private/
+.idea/
+.env
+.DS_Store
